@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: f0a8bac1f250d4844882e83df324a877
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - rock: {fileID: 5400000, guid: ac8cd8e6320ae3e4b927387f08c24c7e, type: 2}
+  - flame: {fileID: 5400000, guid: 2acf9c8e812eff6459715d2b3dce2c96, type: 2}
+  - spray: {fileID: 5400000, guid: caf20877f7cce4351a9b1cfef8dcd186, type: 2}
+  - myo: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
