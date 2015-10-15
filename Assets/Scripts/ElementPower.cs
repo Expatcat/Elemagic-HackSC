@@ -21,7 +21,7 @@ public class ElementPower : MonoBehaviour
 
 	GameObject player; //The actual player
 
-	int selectedElement = 0; //will switch between elements. Default fire.
+	private int selectedElement = 0; //will switch between elements. Default fire.
 
 	// Myo game object to connect with.
 	// This object must have a ThalmicMyo script attached.
@@ -47,8 +47,10 @@ public class ElementPower : MonoBehaviour
 	//throws a boulder forward from the characters position
 	void rockThrow() 
 	{
+	   
 		Rigidbody rockClone = Instantiate (rock, transform.position, transform.rotation) as Rigidbody;
 		rockClone.velocity = transform.forward * speed;
+		Physics.IgnoreCollision(rockClone.GetComponent<SphereCollider>(), player.GetComponent<BoxCollider>());
 	}
 
 	//shoots fire from the player's hand
@@ -61,21 +63,58 @@ public class ElementPower : MonoBehaviour
 	//fires water from the player's hand
 	void waterBeam() 
 	{
-		Rigidbody waterClone = Instantiate (spray, transform.position, transform.rotation) as Rigidbody;
+		Rigidbody waterClone = Instantiate (spray, transform.position, myo.transform.rotation) as Rigidbody;
 		waterClone.velocity = transform.forward * speed;
 	}
 
 	//forces the player up into the air (They can fly!)
 	void airFly() 
 	{
-		playerLoc = new Vector3 (player.transform.position.x, player.transform.position.y + 3000, player.transform.position.z);
-		controller.Move (playerLoc * Time.deltaTime);
+	   
+	    Vector3 jumpDirection = new Vector3(Camera.main.transform.forward.x, Vector3.up.y, Camera.main.transform.forward.z);
+	   
+ 	
+	    player.GetComponent<Rigidbody>().AddForce(jumpDirection * 1500);
+		//playerLoc = new Vector3 (player.transform.position.x, player.transform.position.y + 3000, player.transform.position.z);
+		//controller.Move (playerLoc * Time.deltaTime);
+		
+		
 
 	}
 	
 	// Update is called once per frame.
 	void Update ()
 	{
+	
+		Debug.LogError("NO MYO");
+		
+		if (myo == null) {
+	    
+	      Debug.LogError ("NO MYO");
+	      
+	    }
+	
+		ThalmicMyo thalmicMyo = myo.GetComponent<ThalmicMyo> ();
+	
+		if (thalmicMyo.pose == Pose.Fist) {
+		
+		  Vector3 playerMove = new Vector3(
+		    Camera.main.transform.forward.x,
+		    Camera.main.transform.position.y,
+		    Camera.main.transform.forward.z
+		  );
+			
+		  player.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * 100, ForceMode.Force);
+			
+			
+		}
+		
+		if (water == true) {
+		
+		  waterBeam ();
+		
+		}
+		
 		//hotkey for earth
 		if (Input.GetKeyDown ("z")) 
 		{
@@ -89,7 +128,6 @@ public class ElementPower : MonoBehaviour
      	}
 
 		//stores the myo component
-		ThalmicMyo thalmicMyo = myo.GetComponent<ThalmicMyo> ();
 
 		//makes sure that poses do not repetitively loop (Only happen once)
 		if (thalmicMyo.pose != _lastPose) 
@@ -141,23 +179,36 @@ public class ElementPower : MonoBehaviour
 					//fire
 					case 0:
 						FireFlame();
+						water = false;
 						break;
 
 					//water
 					case 1:
-						waterBeam();
+
+						//waterBeam();
+						water = true;
 						break;
 
 					//earth
 					case 2:
+
+					    water = false;
 						rockThrow();
 						break;
 
 					//air
 					case 3:
+					  
+                        water = false;
 						airFly();
 						break;
 				}
+			}
+			
+			else {
+			
+			  water = false;
+			
 			}
 		}
 	}
