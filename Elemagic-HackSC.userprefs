@@ -1,5 +1,5 @@
-﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="../../../SDHacks/The Revival/The Revival - Unity Project/Assets/LeapMotion/Scripts/Hands/RigidHand.cs">
     <Files>
       <File FileName="../../../SDHacks/The Revival/The Revival - Unity Project/Assets/LeapMotion/Scripts/Hands/RigidHand.cs" Line="1" Column="1" />
